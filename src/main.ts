@@ -5,10 +5,13 @@ import * as sqlite3 from 'sqlite3';
 
 import { AdapterResult } from './adapters/adapter-result.interface';
 import { Adapter } from './adapters/adapter.interface';
+import { AmazonAdapter } from './adapters/amazon.adapter';
+import { EmpikAdapter } from './adapters/empik.adapter';
 import { EuroAdapter } from './adapters/euro.adapter';
 import { KomputronikAdapter } from './adapters/komputronik.adapter';
 import { MediaExpertAdapter } from './adapters/media-expert.adapter';
 import { NeonetAdapter } from './adapters/neonet.adapter';
+import { OleOleAdapter } from './adapters/oleole.adapter';
 import { Channel } from './communication-channels/channel.interface';
 import { SerwerSMSChannel } from './communication-channels/serwer-sms.channel';
 import { logger } from './logger';
@@ -35,6 +38,9 @@ const DEBUG = process.env.DEBUG === 'true';
       new KomputronikAdapter(browser),
       new EuroAdapter(browser),
       new NeonetAdapter(browser),
+      new OleOleAdapter(browser),
+      new EmpikAdapter(browser),
+      new AmazonAdapter(browser),
     ];
     const communicationChannels: Channel[] = [
       new SerwerSMSChannel(

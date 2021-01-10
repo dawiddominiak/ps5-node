@@ -1,12 +1,18 @@
 import * as Bluebird from 'bluebird';
 import * as puppeteer from 'puppeteer';
+import { open } from 'sqlite';
+import * as sqlite3 from 'sqlite3';
 
 import { AdapterResult } from './adapters/adapter-result.interface';
 import { Adapter } from './adapters/adapter.interface';
+import { EuroAdapter } from './adapters/euro.adapter';
+import { KomputronikAdapter } from './adapters/komputronik.adapter';
 import { MediaExpertAdapter } from './adapters/media-expert.adapter';
+import { NeonetAdapter } from './adapters/neonet.adapter';
 import { Channel } from './communication-channels/channel.interface';
 import { SerwerSMSChannel } from './communication-channels/serwer-sms.channel';
 import { logger } from './logger';
+import { Repository } from './repository';
 
 const CONCURRENCY = 2;
 
@@ -16,28 +22,52 @@ const SMS_SERWER_NUMBER = process.env.SMS_SERWER_NUMBER;
 const DEBUG = process.env.DEBUG === 'true';
 
 (async () => {
-  const browser = await puppeteer.launch();
-  const adapters: Adapter[] = [
-    new MediaExpertAdapter(browser)
-  ];
-  const communicationChannels: Channel[] = [
-    new SerwerSMSChannel(
-      SMS_SERWER_USERNAME,
-      SMS_SERWER_PASSWORD,
-      SMS_SERWER_NUMBER,
-      DEBUG,
-    ),
-  ];
-  await processor(adapters, communicationChannels, CONCURRENCY);
+  try {
+    const db = await open<sqlite3.Database, sqlite3.Statement>({
+      filename: './sqlite.db',
+      driver: sqlite3.Database,
+    });
+    const repository = new Repository(db);
+    await repository.init();
+    const browser = await puppeteer.launch();
+    const adapters: Adapter[] = [
+      new MediaExpertAdapter(browser),
+      new KomputronikAdapter(browser),
+      new EuroAdapter(browser),
+      new NeonetAdapter(browser),
+    ];
+    const communicationChannels: Channel[] = [
+      new SerwerSMSChannel(
+        SMS_SERWER_USERNAME,
+        SMS_SERWER_PASSWORD,
+        SMS_SERWER_NUMBER,
+        DEBUG,
+      ),
+    ];
+    await processor(adapters, communicationChannels, repository, CONCURRENCY);
+  } catch (error) {
+    logger.error('Unexpected error: ', error);
+    process.exit(1);
+  }
 })();
 
-async function processor(adapters: Adapter[], communicationChannels: Channel[], maxConcurrency: number = 2) {
+async function processor(adapters: Adapter[], communicationChannels: Channel[], repository: Repository, maxConcurrency: number = 2) {
   while (true) {
     const results = await checkAllAdapters(adapters, maxConcurrency);
-    const availableResults = results.filter(({ available }) => available);
+    const availableResults = results
+      .filter(({ available }) => available);
     logger.info(`There are ${availableResults.length} out of ${results.length} sites with PS5 available.`);
 
-    if (availableResults.length > 0) {
+    const resultsToSendMessageTo = await Bluebird.filter(
+      availableResults,
+      async ({ name }) => !(await repository.wasAvailableInTheLast2Min(name)),
+    );
+    logger.info(`There are ${resultsToSendMessageTo.length} out of ${results.length} sites worth to inform about.`);
+
+    await Bluebird.map(resultsToSendMessageTo, result => repository.save(result), { concurrency: 1 });
+    logger.info(`Saving ${resultsToSendMessageTo.length} available results to the repository.`);
+
+    if (resultsToSendMessageTo.length > 0) {
       await Bluebird.map(
         communicationChannels,
         async channel => {

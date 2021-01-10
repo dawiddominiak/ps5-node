@@ -24,8 +24,19 @@ export abstract class XPathAdapter implements Adapter {
       await page.reload();
     }
 
+    try {
+      await page.waitForSelector(this.xpath);
+    } catch {
+      return {
+        name: this.name,
+        available: true,
+        date: new Date(),
+        message: '[[Missing selector]]'
+      };
+    }
+
     const element = await page.$(this.xpath);
-    const text = ((await page.evaluate(({ textContent }) => textContent, element)) as string).trim();
+    const text = ((await page.evaluate((p) => p?.textContent ?? null, element)) as string | null)?.trim();
 
     return {
       name: this.name,

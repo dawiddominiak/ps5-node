@@ -31,7 +31,7 @@ export abstract class XPathAdapter implements Adapter {
     }
 
     try {
-      await page.waitForSelector(this.xpath);
+      await page.waitForSelector(this.xpath, { timeout: TIMEOUT });
     } catch {
       return {
         name: this.name,

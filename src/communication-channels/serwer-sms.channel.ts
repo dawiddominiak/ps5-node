@@ -31,7 +31,7 @@ export class SerwerSMSChannel implements Channel {
       test: this.debug,
     });
 
-    logger.info(`Text message has been sent to ${this.phone}.`, response);
+    logger.info(`Text message has been sent to ${this.phone}.`, response.data);
   }
 
 }

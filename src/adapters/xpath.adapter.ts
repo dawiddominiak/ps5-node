@@ -28,6 +28,7 @@ export abstract class XPathAdapter implements Adapter {
     const text = ((await page.evaluate(({ textContent }) => textContent, element)) as string).trim();
 
     return {
+      name: this.name,
       available: text !== this.unavailableText,
       date: new Date(),
       message: text

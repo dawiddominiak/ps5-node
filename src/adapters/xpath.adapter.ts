@@ -3,6 +3,8 @@ import { Browser, Page } from 'puppeteer';
 import { AdapterResult } from './adapter-result.interface';
 import { Adapter } from './adapter.interface';
 
+const TIMEOUT = 60 * 1000;
+
 export abstract class XPathAdapter implements Adapter {
   protected pagePromise: Promise<Page>;
   public abstract name: string;
@@ -19,9 +21,13 @@ export abstract class XPathAdapter implements Adapter {
   public async checkAvailability(): Promise<AdapterResult> {
     const page = await this.pagePromise;
     if (page.url() !== this.pageUrl) {
-      await page.goto(this.pageUrl);
+      await page.goto(this.pageUrl, {
+        timeout: TIMEOUT,
+      });
     } else {
-      await page.reload();
+      await page.reload({
+        timeout: TIMEOUT,
+      });
     }
 
     try {

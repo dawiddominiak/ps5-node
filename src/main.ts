@@ -24,6 +24,8 @@ const SMS_SERWER_PASSWORD = process.env.SMS_SERWER_PASSWORD;
 const SMS_SERWER_NUMBER = process.env.SMS_SERWER_NUMBER;
 const DEBUG = process.env.DEBUG === 'true';
 
+logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, number: ${SMS_SERWER_NUMBER} and with a debug mode: ${DEBUG}.`);
+
 (async () => {
   try {
     const db = await open<sqlite3.Database, sqlite3.Statement>({

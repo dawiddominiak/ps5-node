@@ -102,7 +102,7 @@ async function checkAllAdapters(adapters: Adapter[], maxConcurrency: number = 2)
       try {
         logger.info(`Checking ${adapter.name} adapter.`);
         const result = await adapter.checkAvailability();
-        logger.info(`${adapter.name} text: "${result.message}" (${Buffer.from(result.message).toString('base64')}).`);
+        logger.info(`${adapter.name} text: "${result.message}" - ${result.link ?? ''} (${Buffer.from(result.message).toString('base64')}).`);
 
         return result;
       } catch (error) {
@@ -112,6 +112,7 @@ async function checkAllAdapters(adapters: Adapter[], maxConcurrency: number = 2)
           available: false,
           message: `${adapter.name} adapter thrown an error: ${(error as Error).message}.`,
           date: new Date(),
+          link: null,
           name: adapter.name,
         };
       }

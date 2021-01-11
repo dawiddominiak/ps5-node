@@ -4,6 +4,7 @@ import { Adapter } from './adapter.interface';
 import { XPathAdapter } from './xpath.adapter';
 
 const EMPIK_PAGE = 'https://www.empik.com/konsola-sony-playstation-5-1-tb-sony,p1244094954,multimedia-p';
+const SHORT_LINK = 'https://bit.ly/3i2PvK7';
 const XPATH = '.sellerNav__title';
 const UNAVAILABLE_TEXT = 'Produkt niedostępny';
 

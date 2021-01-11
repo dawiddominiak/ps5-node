@@ -11,6 +11,7 @@ export abstract class XPathAdapter implements Adapter {
 
   constructor(
     private readonly pageUrl: string,
+    private readonly shortLink: string,
     private readonly xpath: string,
     private readonly unavailableText: string,
     protected readonly browser: Browser,
@@ -37,6 +38,7 @@ export abstract class XPathAdapter implements Adapter {
         name: this.name,
         available: true,
         date: new Date(),
+        link: this.shortLink,
         message: '[[Missing selector]]'
       };
     }
@@ -48,6 +50,7 @@ export abstract class XPathAdapter implements Adapter {
       name: this.name,
       available: text !== this.unavailableText,
       date: new Date(),
+      link: this.shortLink,
       message: text
     };
   }

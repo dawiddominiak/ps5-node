@@ -17,6 +17,6 @@ export class NeonetAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(NEONET_PAGE, XPATH, UNAVAILABLE_TEXT, browser);
+    super(NEONET_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
   }
 }

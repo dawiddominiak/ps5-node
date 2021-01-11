@@ -17,6 +17,6 @@ export class EuroAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(EURO_PAGE, XPATH, UNAVAILABLE_TEXT, browser);
+    super(EURO_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
   }
 }

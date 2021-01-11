@@ -68,7 +68,7 @@ async function processor(adapters: Adapter[], communicationChannels: Channel[], 
 
     const resultsToSendMessageTo = await Bluebird.filter(
       availableResults,
-      async ({ name }) => !(await repository.wasAvailableInTheLast2Min(name)),
+      async ({ name }) => !(await repository.wasAvailableInTheLast5Min(name)),
     );
     logger.info(`There are ${resultsToSendMessageTo.length} out of ${results.length} sites worth to inform about.`);
 

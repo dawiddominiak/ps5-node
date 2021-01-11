@@ -5,7 +5,7 @@ import { AdapterResult } from './adapters/adapter-result.interface';
 import { logger } from './logger';
 
 const MS_IN_S = 1000;
-const S_IN_2_MIN = 2 * 60;
+const S_IN_5_MIN = 5 * 60;
 
 export class Repository {
   constructor(
@@ -31,9 +31,9 @@ export class Repository {
     );
   }
 
-  public async wasAvailableInTheLast2Min(adapterName: string): Promise<boolean> {
+  public async wasAvailableInTheLast5Min(adapterName: string): Promise<boolean> {
     const result = await this.db.get<{ count: number }>('SELECT COUNT(*) as count FROM adapter_results WHERE available = 1 AND date > :date', {
-      ':date': Math.round(new Date().getTime() / MS_IN_S) - S_IN_2_MIN,
+      ':date': Math.round(new Date().getTime() / MS_IN_S) - S_IN_5_MIN,
     });
 
     logger.info(`${adapterName} was available ${result.count} times in the last 5 minutes.`);

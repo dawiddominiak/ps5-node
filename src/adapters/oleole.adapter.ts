@@ -17,6 +17,6 @@ export class OleOleAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(OLEOLE_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
+    super(OLEOLE_PAGE, SHORT_LINK, XPATH, UNAVAILABLE_TEXT, browser);
   }
 }

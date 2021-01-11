@@ -17,6 +17,6 @@ export class MediaExpertAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(MEDIA_EXPERT_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
+    super(MEDIA_EXPERT_PAGE, SHORT_LINK, XPATH, UNAVAILABLE_TEXT, browser);
   }
 }

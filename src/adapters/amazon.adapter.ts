@@ -17,6 +17,6 @@ export class AmazonAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(AMAZON_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
+    super(AMAZON_PAGE, SHORT_LINK, XPATH, UNAVAILABLE_TEXT, browser);
   }
 }

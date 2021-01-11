@@ -17,6 +17,6 @@ export class EmpikAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(EMPIK_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
+    super(EMPIK_PAGE, SHORT_LINK, XPATH, UNAVAILABLE_TEXT, browser);
   }
 }

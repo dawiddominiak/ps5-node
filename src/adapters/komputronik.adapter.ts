@@ -17,6 +17,6 @@ export class KomputronikAdapter extends XPathAdapter implements Adapter {
   constructor(
     browser: Browser,
   ) {
-    super(KOMPUTRONIK_PAGE, XPATH, SHORT_LINK, UNAVAILABLE_TEXT, browser);
+    super(KOMPUTRONIK_PAGE, SHORT_LINK, XPATH, UNAVAILABLE_TEXT, browser);
   }
 }

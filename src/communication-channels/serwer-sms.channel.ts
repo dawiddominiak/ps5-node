@@ -20,7 +20,7 @@ export class SerwerSMSChannel implements Channel {
   }
 
   public async communicate(results: AdapterResult[]): Promise<void> {
-    const infos = results.map(result => `- ${result.name} ("${result.message}")\n`)
+    const infos = results.map(result => `- ${result.name} ("${result.message}" - ${result.link})\n`)
 
     const response = await axios.post(URL, {
       username: this.username,

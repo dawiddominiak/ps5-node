@@ -13,6 +13,7 @@ import { MediaExpertAdapter } from './adapters/media-expert.adapter';
 import { NeonetAdapter } from './adapters/neonet.adapter';
 import { OleOleAdapter } from './adapters/oleole.adapter';
 import { Channel } from './communication-channels/channel.interface';
+import { SendgridChannel } from './communication-channels/sendgrid.channel';
 import { SerwerSMSChannel } from './communication-channels/serwer-sms.channel';
 import { logger } from './logger';
 import { Repository } from './repository';
@@ -22,6 +23,8 @@ const CONCURRENCY = 2;
 const SMS_SERWER_USERNAME = process.env.SMS_SERWER_USERNAME;
 const SMS_SERWER_PASSWORD = process.env.SMS_SERWER_PASSWORD;
 const SMS_SERWER_NUMBER = process.env.SMS_SERWER_NUMBER;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const EMAIL = process.env.EMAIL ?? 'poczta@dawiddominiak.pl';
 const DEBUG = process.env.DEBUG === 'true';
 
 logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, number: ${SMS_SERWER_NUMBER} and with a debug mode: ${DEBUG}.`);
@@ -50,6 +53,10 @@ logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, 
         SMS_SERWER_PASSWORD,
         SMS_SERWER_NUMBER,
         DEBUG,
+      ),
+      new SendgridChannel(
+        SENDGRID_API_KEY,
+        EMAIL
       ),
     ];
     await processor(adapters, communicationChannels, repository, CONCURRENCY);

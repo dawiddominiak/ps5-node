@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AdapterResult } from 'src/adapters/adapter-result.interface';
 
+import { AdapterResult } from '../adapters/adapter-result.interface';
 import { logger } from '../logger';
 import { Channel } from './channel.interface';
 

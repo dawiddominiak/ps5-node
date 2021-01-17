@@ -10,6 +10,7 @@ import { EmpikAdapter } from './adapters/empik.adapter';
 import { EuroAdapter } from './adapters/euro.adapter';
 import { KomputronikAdapter } from './adapters/komputronik.adapter';
 import { MediaExpertAdapter } from './adapters/media-expert.adapter';
+import { MediaMarktAdapter } from './adapters/media-markt.adapter';
 import { NeonetAdapter } from './adapters/neonet.adapter';
 import { OleOleAdapter } from './adapters/oleole.adapter';
 import { Channel } from './communication-channels/channel.interface';
@@ -50,7 +51,7 @@ logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, 
       new MediaExpertAdapter(browser),
       new KomputronikAdapter(browser),
       new EuroAdapter(browser),
-      new MediaExpertAdapter(browser),
+      new MediaMarktAdapter(browser),
       // new NeonetAdapter(browser),
       new OleOleAdapter(browser),
       new EmpikAdapter(browser),

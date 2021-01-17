@@ -18,7 +18,7 @@ import { SerwerSMSChannel } from './communication-channels/serwer-sms.channel';
 import { logger } from './logger';
 import { Repository } from './repository';
 
-const CONCURRENCY = 2;
+const CONCURRENCY = parseInt(process.env.CONCURRENCY, 10) ?? 3;
 
 const SMS_SERWER_USERNAME = process.env.SMS_SERWER_USERNAME;
 const SMS_SERWER_PASSWORD = process.env.SMS_SERWER_PASSWORD;
@@ -42,7 +42,7 @@ logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, 
       new MediaExpertAdapter(browser),
       new KomputronikAdapter(browser),
       new EuroAdapter(browser),
-      new NeonetAdapter(browser),
+      // new NeonetAdapter(browser),
       new OleOleAdapter(browser),
       new EmpikAdapter(browser),
       new AmazonAdapter(browser),

@@ -37,7 +37,15 @@ logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, 
     });
     const repository = new Repository(db);
     await repository.init();
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      defaultViewport: {
+        isMobile: false,
+        isLandscape: true,
+        width: 1920,
+        height: 1080,
+        hasTouch: false,
+      }
+    });
     const adapters: Adapter[] = [
       new MediaExpertAdapter(browser),
       new KomputronikAdapter(browser),

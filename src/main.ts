@@ -51,11 +51,11 @@ logger.info(`Starting process with SMS Serwer username: ${SMS_SERWER_USERNAME}, 
       new MediaExpertAdapter(browser),
       new KomputronikAdapter(browser),
       new EuroAdapter(browser),
-      new MediaMarktAdapter(browser),
-      // new NeonetAdapter(browser),
+      // new MediaMarktAdapter(browser),
+      new NeonetAdapter(browser),
       new OleOleAdapter(browser),
       new EmpikAdapter(browser),
-      new AmazonAdapter(browser),
+      // new AmazonAdapter(browser),
     ];
     const communicationChannels: Channel[] = [
       new SerwerSMSChannel(

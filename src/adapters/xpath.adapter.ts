@@ -21,6 +21,7 @@ export abstract class XPathAdapter implements Adapter {
 
   public async checkAvailability(): Promise<AdapterResult> {
     const page = await this.pagePromise;
+    page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.1 Safari/605.1.15')
     if (page.url() !== this.pageUrl) {
       await page.goto(this.pageUrl, {
         timeout: TIMEOUT,
